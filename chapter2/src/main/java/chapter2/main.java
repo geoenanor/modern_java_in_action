@@ -8,7 +8,9 @@ import chapter2.entities.COLOR;
 import chapter2.filters.AppleFilters;
 import chapter2.filters.impl.AppleColorRedPredicate;
 import chapter2.filters.impl.AppleHeavyWeightPredicate;
+import chapter2.filters.impl.ApplePrintAllData;
 import chapter2.filters.impl.AppleRedAndHeavyPredicate;
+import chapter2.filters.impl.AppleWeightPrettyPrint;
 
 /**
  * @author 0
@@ -25,14 +27,24 @@ public class main {
 			
 			//noPassingBehavior(lst);
 			
-			passingBehavior(lst);
+			//passingBehavior(lst);
 			
-			
+			prettyPringApple(lst);
 			
 	
 			
 	}
+	private static void prettyPringApple(List<Apple> lst) {
+		
+		AppleFilters filter = new AppleFilters();
 	
+		filter.prettyPrintApple(lst, new AppleWeightPrettyPrint() );
+		
+		filter.prettyPrintApple(lst, new ApplePrintAllData() );
+		
+	}
+
+
 	private static void passingBehavior(List<Apple> lst) {
 		
 		AppleFilters filter = new AppleFilters();

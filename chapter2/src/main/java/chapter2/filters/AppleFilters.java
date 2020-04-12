@@ -6,6 +6,7 @@ import java.util.List;
 import chapter2.entities.Apple;
 import chapter2.entities.COLOR;
 import chapter2.filters.interfaces.ApplePredicate;
+import chapter2.filters.interfaces.AppleFormatter;
 
 public class AppleFilters {
 	//Primer intento
@@ -58,5 +59,16 @@ public class AppleFilters {
 		}
 		
 		return lst;
+	}
+
+	public void prettyPrintApple(List<Apple> manzanas, AppleFormatter printStrategy) {
+
+		System.out.println("====================================");
+		for(Apple manzana : manzanas) {
+			
+			String txt = printStrategy.accept(manzana);
+			System.out.println(txt);
+		}
+
 	}
 }
