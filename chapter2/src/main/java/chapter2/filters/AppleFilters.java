@@ -5,6 +5,7 @@ import java.util.List;
 
 import chapter2.entities.Apple;
 import chapter2.entities.COLOR;
+import chapter2.filters.interfaces.ApplePredicate;
 
 public class AppleFilters {
 	//Primer intento
@@ -39,6 +40,19 @@ public class AppleFilters {
 		
 		for(Apple manzana : manzanas) {
 			if(peso >= manzana.getWeight()) {
+				lst.add(manzana);
+			}
+		}
+		
+		return lst;
+	}
+
+	//Behavior Parameterization . El comportamiento viene parametrizado en ApplePredicate
+	public List<Apple> filterApples(List<Apple> manzanas, ApplePredicate predicado) {
+		List<Apple> lst = new ArrayList<>();
+		
+		for(Apple manzana : manzanas) {
+			if ( predicado.test(manzana)) {
 				lst.add(manzana);
 			}
 		}

@@ -6,6 +6,9 @@ import java.util.List;
 import chapter2.entities.Apple;
 import chapter2.entities.COLOR;
 import chapter2.filters.AppleFilters;
+import chapter2.filters.impl.AppleColorRedPredicate;
+import chapter2.filters.impl.AppleHeavyWeightPredicate;
+import chapter2.filters.impl.AppleRedAndHeavyPredicate;
 
 /**
  * @author 0
@@ -20,23 +23,49 @@ public class main {
 
 			List<Apple> lst = cargaDatos();	
 			
-			AppleFilters filter = new AppleFilters();
+			//noPassingBehavior(lst);
 			
-			List<Apple> lstFiltrada = filter.filterGreenApples(lst);
+			passingBehavior(lst);
 			
-			imprimeLst(lstFiltrada);
 			
-			//Filtrando con parametros
-			lstFiltrada = filter.filterColorApples(lst, COLOR.GREEN);
 			
-			imprimeLst(lstFiltrada);
+	
 			
+	}
+	
+	private static void passingBehavior(List<Apple> lst) {
+		
+		AppleFilters filter = new AppleFilters();
+		
+		List<Apple> lstFiltrada = filter.filterApples(lst, new AppleColorRedPredicate ());
+		imprimeLst(lstFiltrada);
+		
+		lstFiltrada = filter.filterApples(lst, new AppleHeavyWeightPredicate());
+		imprimeLst(lstFiltrada);
+		
+		lstFiltrada = filter.filterApples(lst, new AppleRedAndHeavyPredicate());
+		imprimeLst(lstFiltrada);
+	}
+
+	private static void noPassingBehavior(List<Apple> lst) {
+		
+		AppleFilters filter = new AppleFilters();
+		
+		List<Apple> lstFiltrada = filter.filterGreenApples(lst);
+		
+		imprimeLst(lstFiltrada);
+		
+		//Filtrando con parametros
+		lstFiltrada = filter.filterColorApples(lst, COLOR.GREEN);
+		
+		imprimeLst(lstFiltrada);		
 	}
 
 	private static void imprimeLst(List<Apple> lstFiltrada) {
 		for(Apple item : lstFiltrada) {
 			System.out.println(item.toString());
 		}
+		System.out.println("======================================");
 		
 	}
 
