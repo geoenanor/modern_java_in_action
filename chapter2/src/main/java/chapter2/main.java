@@ -11,6 +11,7 @@ import chapter2.filters.impl.AppleHeavyWeightPredicate;
 import chapter2.filters.impl.ApplePrintAllData;
 import chapter2.filters.impl.AppleRedAndHeavyPredicate;
 import chapter2.filters.impl.AppleWeightPrettyPrint;
+import chapter2.filters.interfaces.ApplePredicate;
 
 /**
  * @author 0
@@ -29,12 +30,71 @@ public class main {
 			
 			//passingBehavior(lst);
 			
-			prettyPringApple(lst);
+			//prettyPringApple(lst);  //Quiz 2.1
 			
+			//Fifth attempt: Anonymous classes
+			//filterWithAnonymousClasses(lst);
 	
-			
+			//Sixth attempt. Lambda expressions
+			filterWithLambdaExpr(lst);		
 	}
-	private static void prettyPringApple(List<Apple> lst) {
+	private static void filterWithLambdaExpr(List<Apple> lst) {
+	System.out.println("FilterWithLambdaMethod");
+	AppleFilters filter = new AppleFilters();
+	
+	List<Apple> lstFiltrada = filter.filterApples(lst, (Apple manzana) -> manzana.getColor().equals(COLOR.GREEN));
+	imprimeLst(lstFiltrada);
+	
+	lstFiltrada = filter.filterApples(lst, (Apple manzana) -> manzana.getWeight() >=  150);
+	imprimeLst(lstFiltrada);
+	
+	lstFiltrada = filter.filterApples(lst, (Apple manzana) -> manzana.getWeight() >=  150 && COLOR.RED.equals(manzana.getColor()));
+	imprimeLst(lstFiltrada);
+		
+
+		
+	}
+
+private static void filterWithAnonymousClasses(List<Apple> lst) {
+		//No se crean las implementaciones de los ifaces, se instancian y declaran a la vez:
+/*
+ * new ApplePredicate(){
+		public boolean test (Apple manzana) {
+			return COLOR.RED.equals(manzana.getColor());
+		}
+	});
+ */
+	
+	AppleFilters filter = new AppleFilters();
+	
+	//List<Apple> lstFiltrada = filter.filterApples(lst, new AppleColorRedPredicate ());
+	List<Apple> lstFiltrada = filter.filterApples(lst, new ApplePredicate(){
+		public boolean test (Apple manzana) {
+			return COLOR.RED.equals(manzana.getColor());
+		}
+	});
+	
+	imprimeLst(lstFiltrada);
+	
+	//lstFiltrada = filter.filterApples(lst, new AppleHeavyWeightPredicate());
+	lstFiltrada = filter.filterApples(lst, new ApplePredicate(){
+		public boolean test (Apple manzana) {
+			return manzana.getWeight() >=  150;
+		}
+	});
+	imprimeLst(lstFiltrada);
+	
+	//lstFiltrada = filter.filterApples(lst, new AppleRedAndHeavyPredicate());
+	lstFiltrada = filter.filterApples(lst,new ApplePredicate(){
+		public boolean test (Apple manzana) {
+			return manzana.getWeight() >=  150 && COLOR.RED.equals(manzana.getColor());
+		}
+	});
+	imprimeLst(lstFiltrada);
+		
+	}
+
+private static void prettyPringApple(List<Apple> lst) {
 		
 		AppleFilters filter = new AppleFilters();
 	
